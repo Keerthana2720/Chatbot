@@ -1,0 +1,45 @@
+{
+  "name": "ai-chatbot-fullstack",
+  "version": "1.0.0",
+  "description": "Full-stack AI chatbot with Express.js backend, Next.js frontend, and PostgreSQL database",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "cd backend && npm install",
+    "build:frontend": "cd frontend && npm run build",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm start",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "db:generate": "cd backend && npx prisma generate",
+    "db:push": "cd backend && npx prisma db push",
+    "db:migrate": "cd backend && npx prisma migrate dev",
+    "db:studio": "cd backend && npx prisma studio",
+    "setup": "npm run install:all && npm run db:generate && npm run db:push"
+  },
+  "devDependencies": {
+    "@types/react-speech-recognition": "^3.9.6",
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "ai",
+    "chatbot",
+    "express",
+    "nextjs",
+    "postgresql",
+    "openai",
+    "elevenlabs",
+    "whisper",
+    "speech",
+    "audio",
+    "video"
+  ],
+  "author": "AI Assistant",
+  "license": "MIT",
+  "dependencies": {
+    "react-speech-recognition": "^4.0.1",
+    "regenerator-runtime": "^0.14.1"
+  }
+}

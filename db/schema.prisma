@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  conversations Conversation[]
+  messages      Message[]
+  audioFiles    AudioFile[]
+
+  @@map("users")
+}
+
+model Conversation {
+  id        String   @id @default(cuid())
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Foreign keys
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Relations
+  messages Message[]
+
+  @@map("conversations")
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  role      String   // 'user' or 'assistant'
+  createdAt DateTime @default(now())
+
+  // Foreign keys
+  userId         String
+  conversationId String?
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  conversation   Conversation? @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+model AudioFile {
+  id        String   @id @default(cuid())
+  text      String
+  voiceId   String?
+  filePath  String?
+  duration  Int?     // Duration in seconds
+  createdAt DateTime @default(now())
+
+  // Foreign keys
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("audio_files")
+}
+
+model ApiUsage {
+  id          String   @id @default(cuid())
+  userId      String?
+  endpoint    String
+  method      String
+  statusCode  Int
+  responseTime Int     // Response time in milliseconds
+  tokensUsed  Int?     // For AI API calls
+  cost        Float?   // Cost in USD
+  createdAt   DateTime @default(now())
+
+  @@map("api_usage")
+}
+
+model SystemSettings {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+  type  String // 'string', 'number', 'boolean', 'json'
+
+  @@map("system_settings")
+}

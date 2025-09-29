@@ -1,0 +1,56 @@
+{
+  "name": "ai-chatbot-frontend",
+  "version": "1.0.0",
+  "description": "AI Chatbot Frontend with Next.js, React, and Audio Features",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^14.0.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "axios": "^1.6.2",
+    "js-cookie": "^3.0.5",
+    "react-hot-toast": "^2.4.1",
+    "lucide-react": "^0.294.0",
+    "framer-motion": "^10.16.16",
+    "react-speech-recognition": "^3.10.0",
+    "react-speech-kit": "^2.0.5",
+    "react-audio-visualize": "^1.0.0",
+    "react-webcam": "^7.1.1",
+    "react-dropzone": "^14.2.3",
+    "react-markdown": "^9.0.1",
+    "remark-gfm": "^4.0.0",
+    "rehype-highlight": "^7.0.0",
+    "tailwindcss": "^3.3.6",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "@types/js-cookie": "^3.0.6",
+    "typescript": "^5.3.3",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.0.4",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0"
+  },
+  "keywords": [
+    "ai",
+    "chatbot",
+    "nextjs",
+    "react",
+    "speech",
+    "audio",
+    "video"
+  ],
+  "author": "AI Assistant",
+  "license": "MIT"
+}
