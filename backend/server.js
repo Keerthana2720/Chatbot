@@ -116,3 +116,13 @@ const startServer = async () => {
 startServer();
 
 module.exports = app;
+
+// Add at the end of your Express server.js file
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({
+    error: err.message || 'Internal Server Error'
+  });
+});
