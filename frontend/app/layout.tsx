@@ -1,3 +1,5 @@
+import 'regenerator-runtime/runtime';
+import { AudioProvider } from '@/contexts/AudioContext';
 // app/layout.tsx
 import type { Metadata } from 'next';
 import './globals.css';
@@ -46,7 +48,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AudioProvider>
+          {children}
+        </AudioProvider>
+      </body>
     </html>
   );
 }

@@ -1,86 +1,44 @@
-'use client';
 
-import { useState, useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
+"use client";
+import 'regenerator-runtime/runtime';
 import { useAudio } from '@/contexts/AudioContext';
-import ChatInterface from '@/components/ChatInterface';
-import LoginForm from '@/components/LoginForm';
-import RegisterForm from '@/components/RegisterForm';
-import Header from '@/components/Header';
-import Sidebar from '@/components/Sidebar';
-import { Toaster } from 'react-hot-toast';
+import { useEffect } from 'react';
 
-export default function Home() {
-  const { user, loading } = useAuth();
-  const { isListening, isSpeaking } = useAudio();
-  const [showRegister, setShowRegister] = useState(false);
+export default function HomePage() {
+  const {
+    isListening,
+    isSpeaking,
+    startListening,
+    stopListening,
+    speak,
+  } = useAudio();
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="spinner mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold gradient-text mb-2">
-              AI Chatbot
-            </h1>
-            <p className="text-gray-600">
-              Advanced AI assistant with audio and video features
-            </p>
-          </div>
-          
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            {showRegister ? (
-              <RegisterForm onSwitchToLogin={() => setShowRegister(false)} />
-            ) : (
-              <LoginForm onSwitchToRegister={() => setShowRegister(true)} />
-            )}
-          </div>
-        </div>
-        <Toaster />
-      </div>
-    );
-  }
+  useEffect(() => {
+    speak("Hello, welcome to the AI chatbot!");
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="flex h-screen">
-        {/* Sidebar */}
-        <Sidebar />
-        
-        {/* Main Content */}
-        <div className="flex-1 flex flex-col">
-          <Header />
-          <main className="flex-1 overflow-hidden">
-            <ChatInterface />
-          </main>
-        </div>
+    <main style={{ padding: '2rem' }}>
+      <h1>🎙️ AI Chatbot</h1>
+      <p>Status: {isListening ? 'Listening...' : 'Not Listening'}</p>
+      <p>Speaking: {isSpeaking ? 'Yes' : 'No'}</p>
+
+      <div style={{ marginTop: '1rem' }}>
+        <button onClick={startListening} style={buttonStyle}>Start Listening</button>
+        <button onClick={stopListening} style={buttonStyle}>Stop Listening</button>
+        <button onClick={() => speak("This is a test speech.")} style={buttonStyle}>Speak</button>
       </div>
-      
-      {/* Status indicators */}
-      {isListening && (
-        <div className="fixed bottom-4 right-4 bg-red-500 text-white px-4 py-2 rounded-full shadow-lg animate-pulse">
-          🎤 Listening...
-        </div>
-      )}
-      
-      {isSpeaking && (
-        <div className="fixed bottom-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg animate-pulse">
-          🔊 Speaking...
-        </div>
-      )}
-      
-      <Toaster />
-    </div>
+    </main>
   );
 }
+
+const buttonStyle = {
+  marginRight: '1rem',
+  padding: '0.5rem 1rem',
+  fontSize: '1rem',
+  backgroundColor: '#4ade80',
+  color: '#000',
+  border: 'none',
+  borderRadius: '5px',
+  cursor: 'pointer',
+};
