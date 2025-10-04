@@ -33,7 +33,9 @@ const ChatInterface: React.FC = () => {
     stopListening, 
     speak, 
     autoSpeak, 
-    setAutoSpeak 
+    setAutoSpeak,
+    transcript,
+    resetTranscript,
   } = useAudio();
   
   const [messages, setMessages] = useState<Message[]>([]);
@@ -55,6 +57,21 @@ const ChatInterface: React.FC = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Sync the live speech transcript into the input while listening
+  useEffect(() => {
+    if (isListening) {
+      setInputValue(transcript);
+    }
+  }, [transcript, isListening]);
+
+  // When listening stops, if we have a transcript, send it automatically
+  useEffect(() => {
+    if (!isListening && transcript && transcript.trim()) {
+      sendMessage(transcript);
+      resetTranscript();
+    }
+  }, [isListening]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -86,7 +103,7 @@ const ChatInterface: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await chatAPI.sendMessage(content, user.id, conversationId);
+  const response = await chatAPI.sendMessage(content, user.id, conversationId ?? undefined);
       const { aiMessage } = response.data;
       
       setMessages(prev => [...prev, aiMessage]);
@@ -215,6 +232,51 @@ const ChatInterface: React.FC = () => {
       {showWebcam && (
         <div className="border-t border-gray-200 p-4 bg-gray-50">
           <Webcam />
+        </div>
+      )}
+      {/* Settings Panel (toggleable) */}
+      {showSettings && (
+        <div className="fixed right-6 bottom-20 w-80 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-50">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-sm font-semibold">Settings</h3>
+            <button
+              onClick={() => setShowSettings(false)}
+              className="text-gray-500 hover:text-gray-700"
+              aria-label="Close settings"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div className="space-y-3 text-sm">
+            <div className="flex items-center justify-between">
+              <span>Auto-speak</span>
+              <button
+                onClick={toggleAutoSpeak}
+                className={`px-2 py-1 rounded ${autoSpeak ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700'}`}
+              >
+                {autoSpeak ? 'On' : 'Off'}
+              </button>
+            </div>
+
+            <div>
+              <label className="block text-gray-700 text-sm mb-1">Voice</label>
+              <select className="w-full border border-gray-200 rounded px-2 py-1 text-sm">
+                <option>Default</option>
+                <option>Voice 1</option>
+                <option>Voice 2</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-gray-700 text-sm mb-1">Assistant Tone</label>
+              <select className="w-full border border-gray-200 rounded px-2 py-1 text-sm">
+                <option>Helpful</option>
+                <option>Formal</option>
+                <option>Friendly</option>
+              </select>
+            </div>
+          </div>
         </div>
       )}
 
