@@ -25,6 +25,8 @@ interface AudioContextType {
   voices: Voice[];
   selectedVoice: string;
   autoSpeak: boolean;
+  transcript: string;
+  resetTranscript: () => void;
   startListening: () => void;
   stopListening: () => void;
   speak: (text: string) => void;
@@ -192,6 +194,8 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
     voices,
     selectedVoice,
     autoSpeak,
+    transcript,
+    resetTranscript,
     startListening,
     stopListening,
     speak,

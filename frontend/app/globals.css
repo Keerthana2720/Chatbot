@@ -17,6 +17,30 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+/* Ensure app root centers content when using .app-root */
+.app-root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Defensive: ensure app UI receives pointer events and sits above accidental overlays */
+.app-root > * {
+  position: relative;
+  z-index: 1000; /* above common dev overlays/backdrops */
+  pointer-events: auto !important;
+}
+
+/* DEBUG: outline and allow clicking on any full-screen overlay/backdrop inserted by dev tools
+   Remove this block once issue is diagnosed. */
+[data-nextjs-dialog-backdrop], [data-nextjs-dialog-overlay], [data-nextjs-dialog], [data-nextjs-dialog-content] {
+  outline: 3px dashed rgba(255,0,0,0.6) !important;
+  background: rgba(255, 0, 0, 0.02) !important;
+  pointer-events: auto !important;
+  z-index: 999 !important;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
