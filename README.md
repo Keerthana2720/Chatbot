@@ -295,14 +295,6 @@ This project is open source and available under the MIT License.
 4. Add tests if applicable
 5. Submit a pull request
 
-## 📞 Support
 
-For issues and questions:
-1. Check the troubleshooting section
-2. Review the logs for error details
-3. Ensure all dependencies are properly installed
-4. Verify environment variables are correctly set
 
----
 
-**Built with ❤️ using Express.js, Next.js, PostgreSQL, OpenAI, and ElevenLabs**
