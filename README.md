@@ -282,11 +282,6 @@ npm run install:all
 - **Analytics**: User interaction analytics
 - **Admin Panel**: Administrative interface
 - **API Documentation**: Swagger/OpenAPI documentation
-
-## 📄 License
-
-This project is open source and available under the MIT License.
-
 ## 🤝 Contributing
 
 1. Fork the repository
